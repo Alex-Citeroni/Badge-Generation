@@ -1,0 +1,24 @@
+layout:
+  margin_x: 30
+  top_offset: 125
+  box_height: 200
+  rows: 2
+  cols: 2
+  rotation_top: 0
+  rotation_bottom: 180
+  align: 1
+
+columns:
+  first_name: "NAME"
+  full_name: "FULL NAME"
+  company: "COMPANY"
+  lastname: "LASTNAME"
+
+font:
+  path: "fonts/DejaVuSans.ttf"
+  alias: "dejavu"
+  big: 40
+  small: 16
+  min_big: 24
+  min_small: 10
+  step: 1

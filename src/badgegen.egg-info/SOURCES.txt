@@ -1,0 +1,13 @@
+LICENSE
+README.md
+pyproject.toml
+src/badgegen/__init__.py
+src/badgegen/cli.py
+src/badgegen/core.py
+src/badgegen.egg-info/PKG-INFO
+src/badgegen.egg-info/SOURCES.txt
+src/badgegen.egg-info/dependency_links.txt
+src/badgegen.egg-info/entry_points.txt
+src/badgegen.egg-info/requires.txt
+src/badgegen.egg-info/top_level.txt
+tests/test_smoke.py

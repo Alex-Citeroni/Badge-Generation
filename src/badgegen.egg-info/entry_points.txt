@@ -1,0 +1,2 @@
+[console_scripts]
+badgegen = badgegen.cli:main

@@ -1,0 +1,30 @@
+Metadata-Version: 2.4
+Name: badgegen
+Version: 0.1.0
+Summary: Generatore flessibile di badge PDF da Excel e template PDF
+Author: Alex Citeroni
+License: MIT
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: pymupdf>=1.24.0
+Requires-Dist: pandas>=2.0.0
+Requires-Dist: openpyxl>=3.1.0
+Requires-Dist: typer>=0.9.0
+Requires-Dist: pyyaml>=6.0.0
+Dynamic: license-file
+
+# badgegen
+
+Generatore di badge PDF a partire da un template in PDF e da un file Excel
+contenente nomi, cognomi e azienda. Supporta:
+
+* Config YAML per layout, colonne e font
+* API Python (`badgegen.core.generate_badges`)
+* CLI (`badgegen ...`)
+* Preset layout (`src/badgegen/layouts/a4_2x2.yaml`)
+
+----
+
+**Nota:** i file binari (template PDF, font TTF, Excel esempio) NON sono inclusi; mettili
+nelle cartelle `examples/` e `fonts/` come descritto nel README.
