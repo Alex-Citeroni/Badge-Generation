@@ -99,7 +99,7 @@ pages = generate_badges(
     excel_path=Path("nomi.xlsx"),
     template_pdf=Path("template.pdf"),
     output_dir=Path("badge_output"),
-    font_spec=FontSpec(path=Path("fonts/DejaVuSans.ttf")),
+    font_spec=FontSpec(path=Path("fonts/calibri-regular.ttf")),
     layout=Layout(rows=2, cols=2),
 )
 print(f"Generated {pages} PDFs!")

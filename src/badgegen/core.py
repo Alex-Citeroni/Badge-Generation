@@ -138,6 +138,10 @@ def _make_grid(rect, rows, cols) -> List:
     ]
 
 
+def _normalize(s: str) -> str:
+    return re.sub(r"\s+", " ", s.strip())
+
+
 def generate_badges(
     excel_path: Path,
     template_pdf: Path,
@@ -183,11 +187,14 @@ def generate_badges(
             if idx >= len(rows):
                 break
 
-            row = rows.iloc[idx]
+            if idx < layout.cols:
+                row = rows.iloc[idx]
+            else:
+                row = rows.iloc[idx - layout.cols]
             fname_raw = str(row.get(columns.first_name, "") or "")
             first_name = fname_raw.split()[0].upper() if fname_raw else ""
-            full_name = str(row.get(columns.full_name, "") or "").strip()
-            company = str(row.get(columns.company, "") or "").strip()
+            full_name = _normalize(str(row.get(columns.full_name, "") or ""))
+            company = _normalize(str(row.get(columns.company, "") or "")).upper()
 
             r_idx = idx // layout.cols
             rotate = layout.rotation_top if r_idx == 0 else layout.rotation_bottom

@@ -1,4 +1,5 @@
 .venv/
+input/
 badge_output/
 *__pycache__/
 *.pyc
