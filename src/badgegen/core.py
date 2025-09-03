@@ -37,6 +37,7 @@ class Layout:
     rotation_top: int = 0
     rotation_bottom: int = 180
     align: int = 1
+    text_y_shift: float = 25.0
 
 
 def _clean_filename(s: Optional[str], fallback: str = "anon") -> str:
@@ -82,6 +83,11 @@ def _write_block(
             else outer_rect.y1 - layout.top_offset
         ),
     )
+
+    if layout.text_y_shift != 0:
+        dir_shift = 1 if rotate == 0 else -1
+        inner = inner + (0, dir_shift * layout.text_y_shift, 0, dir_shift * layout.text_y_shift)
+
 
     _insert_textbox_fit(
         page,
@@ -169,14 +175,15 @@ def generate_badges(
         subset=[columns.first_name, columns.full_name, columns.company], how="all"
     ).reset_index(drop=True)
 
-    slots_per_page = layout.rows * layout.cols
+    people_per_page = layout.cols
     created = 0
 
-    for i in range(0, len(df), slots_per_page):
-        rows = df.iloc[i : i + slots_per_page]
-        if duplicates_fill_last_page and len(rows) < slots_per_page:
+    for i in range(0, len(df), people_per_page):
+        rows = df.iloc[i : i + people_per_page]
+
+        if duplicates_fill_last_page and len(rows) < people_per_page:
             last = rows.iloc[-1:]
-            while len(rows) < slots_per_page:
+            while len(rows) < people_per_page:
                 rows = pd.concat([rows, last], ignore_index=True)
 
         doc = fitz.open(str(template_pdf))
@@ -184,20 +191,20 @@ def generate_badges(
         rects = _make_grid(page.rect, layout.rows, layout.cols)
 
         for idx, rect in enumerate(rects):
-            if idx >= len(rows):
-                break
+            col_idx = idx % layout.cols
+            row_idx = idx // layout.cols
 
-            if idx < layout.cols:
-                row = rows.iloc[idx]
-            else:
-                row = rows.iloc[idx - layout.cols]
+            if col_idx >= len(rows):
+                continue
+
+            row = rows.iloc[col_idx]
+
             fname_raw = str(row.get(columns.first_name, "") or "")
             first_name = fname_raw.split()[0].upper() if fname_raw else ""
             full_name = _normalize(str(row.get(columns.full_name, "") or ""))
             company = _normalize(str(row.get(columns.company, "") or "")).upper()
 
-            r_idx = idx // layout.cols
-            rotate = layout.rotation_top if r_idx == 0 else layout.rotation_bottom
+            rotate = layout.rotation_top if row_idx == 0 else layout.rotation_bottom
 
             _write_block(
                 page, rect, first_name, full_name, company, layout, font_spec, custom_font, rotate

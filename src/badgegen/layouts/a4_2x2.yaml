@@ -15,7 +15,7 @@ columns:
   lastname: "LASTNAME"
 
 font:
-  path: "fonts/DejaVuSans.ttf"
+  path: "fonts/calibri-regular.ttf"
   alias: "dejavu"
   big: 40
   small: 16
